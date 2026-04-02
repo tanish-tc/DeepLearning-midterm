@@ -1,7 +1,6 @@
 # 🎨 Deep Learning - Kaggle Mid-Term: The SVG Generation Chronicles
 
 **Final Kaggle Score:** `16.05142` (and climbing)  
-**Hardware Hopping:** Colab (Single A100) ➡️ Chameleon Cloud (4x A100 Cluster) ➡️ Apple Silicon (MLX)  
 **Core Stack:** PyTorch, Hugging Face `transformers`, `vLLM`, `mlx-lm`, `xml.etree.ElementTree`
 
 ## 📖 The Prologue: Deceptively Simple
@@ -24,9 +23,11 @@ This repository is the log of how we survived dependency hell, bypassed VRAM bot
 
 We started lean. To fit the training loop into a standard Colab instance, we took Qwen2.5-1.5B and quantized it to 4-bit. We fired off two massive overnight runs just to get the loss curve to stabilize. 
 
-**The Reality Check:** The model learned the shapes, but it was incredibly sloppy. It hallucinated non-existent attributes like `filling="0"` and babbled out massive coordinates like `M20.833396911621094 100.0`. Out of 1000 prompts, 560 completely failed the 8k character limit or XML parsing. However, the 440 that *did* pass were mathematically perfect, carrying our initial baseline score to **15.30**.
+**The Reality Check:** The model learned the shapes, but it was incredibly sloppy. It hallucinated non-existent attributes like `filling="0"` and babbled out massive coordinates like `M20.833396911621094 100.0`. Out of 1000 prompts, 560 completely failed the 8k character limit or XML parsing. However, the 440 that *did* pass were mathematically perfect, carrying our initial baseline score to **13.30**.
 
-> 📸 **[INSERT IMAGE HERE: Screenshot of the first Colab notebook showing the 560/1000 fallback warning]**
+> ![Alt Text](images/5.png)
+> ![Alt Text](images/7.png)
+
 
 ### Iteration 2: The "Data Wash" & Scaling Up
 * **Artifacts:** `models/Qwen2.5-1.5B-merged.zip` ➡️ `models/Qwen2.5-1.5B-30+trains.zip`
@@ -35,7 +36,7 @@ Quantization was degrading the precise syntax required for XML. We moved to pure
 
 It was here we implemented **"The Data Wash"** (`test_submission.py`). We realized we were wasting thousands of tokens on decimal precision. We wrote a regex pipeline to pre-process the dataset, truncating all SVG coordinates to 2 decimal places (`100.12`). We also hard-coded fixes to scrub empty `fill=""` attributes and enforce the 256x256 header. This functionally tripled the amount of geometric paths we could fit into the 8k limit.
 
-> 📸 **[INSERT IMAGE HERE: Side-by-side comparison of the raw 15-decimal dataset vs the washed 2-decimal dataset]**
+
 
 ### Iteration 3: Hardware Hopping (Chameleon 4x A100 & MLX)
 * **Artifacts:** `models/gemma3-weights.zip`
@@ -56,11 +57,12 @@ But inference was a nightmare. We wanted to run a **Best-of-5 (`n=5`)** sampling
 
 **The "Flat Batch" Hack:** Instead of using vLLM's buggy internal `n=5` parameter, we hacked the input list. We wrote a script that literally duplicated every prompt 5 times in the array and ran vLLM with `n=1`. It bypassed the memory bug completely and generated 5,000 outputs in minutes. 
 
-> 📸 **[INSERT IMAGE HERE: Kaggle Leaderboard screenshot showing the 16.05142 score]**
+> ![Alt Text](images/6.png)
+
 
 ---
 
-## 🧠 The Secret Weapons: Ensembling & Ablations
+## 🧠 Ensembling & Ablations
 
 ### The Priority Mega-Tournament
 We had a folder (`submission-iterations/`) filled with 15+ CSVs from different models, epochs, and temperatures. Why rely on just one?
@@ -133,6 +135,13 @@ To mathematically prove *why* our parameters worked, we ran an ablation study on
 * `visualize.py` - Reads a submission CSV and generates a static HTML gallery of SVG cards.
 * `inter-visualize.py` - Builds the interactive multi-submission curation SPA in HTML. Supports selecting one SVG per prompt and downloading a curated CSV directly from the browser.
 * **Generated Artifacts:** `interactive_gallery_compare.html`, `svg_gallery_ensemble.html`, `svg_gallery_gemma.html`, etc.
+
+## Submissions Comparision
+> ![Alt Text](images/1.png)
+> ![Alt Text](images/2.png)
+> ![Alt Text](images/3.png)
+> ![Alt Text](images/4.png)
+
 
 ---
 
