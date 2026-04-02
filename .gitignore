@@ -6,3 +6,4 @@ models/Qwen3.5-3B-weights.zip
 models/Qwen2.5-3B_4bit-weights.zip
 models/Qwen2.5-3B-weights.zip
 dataset/
+__pycache__/

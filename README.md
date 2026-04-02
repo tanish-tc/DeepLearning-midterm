@@ -64,7 +64,7 @@ But inference was a nightmare. We wanted to run a **Best-of-5 (`n=5`)** sampling
 
 ## 🧠 Ensembling & Ablations
 
-### The Priority Mega-Tournament
+### The Priority
 We had a folder (`submission-iterations/`) filled with 15+ CSVs from different models, epochs, and temperatures. Why rely on just one?
 
 We wrote `priority_mega_ensemble.py`. 
@@ -73,10 +73,9 @@ We wrote `priority_mega_ensemble.py`.
 3. It literally counts the physical XML tags (`len(list(root.iter()))`) to find the most geometrically complex drawing.
 4. **The Tie-Breaker:** We gave our best Qwen-3B outputs "Priority Status." If an older model tied with our new model, the script automatically swapped in the newer, mathematically cleaner code based on shortest string length.
 
-### The "God-Mode" Visualizer
+### The Visualizer
 Algorithms are great, but the human eye is the ultimate judge. We built `inter-visualize.py`—a Single Page Application (SPA) in Python/HTML. It loads the merged ensemble data and displays a beautiful interactive gallery. We could scroll through, see the model outputs side-by-side, manually click the best one (highlighting it in green), and click a button to instantly download the final, human-curated `submission.csv`.
 
-> 📸 **[INSERT IMAGE HERE: The Interactive HTML "God-Mode" UI showing the ✅ SELECTED SVGs]**
 
 ### Ablation Studies
 To mathematically prove *why* our parameters worked, we ran an ablation study on the first 5 prompts using 4 different configurations.
@@ -85,7 +84,9 @@ To mathematically prove *why* our parameters worked, we ran an ablation study on
 * **Strict Penalty:** `Temp 0.35, Repetition Penalty 1.2` (Stopped the infinite drawing loops).
 * **The Champion:** `Temp 0.35, Rep 1.1, Best-of-5` (The sweet spot of creativity and structural integrity).
 
-> 📸 **[INSERT IMAGE HERE: Screenshot of the ablation_matrix.html table showing the failed high-temp runs vs the successful Champion runs]**
+
+
+> ![Alt Text](images/6.png)
 
 ---
 
