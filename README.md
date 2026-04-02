@@ -86,7 +86,7 @@ To mathematically prove *why* our parameters worked, we ran an ablation study on
 
 
 
-> ![Alt Text](images/6.png)
+> ![Alt Text](images/8.png)
 
 ---
 
