@@ -6,12 +6,12 @@ import json
 # ==========================================
 # ⚙️ CONFIGURATION
 # ==========================================
-FOLDER_PATH = "././submissions"  # Folder with your 3-4 CSVs
+FOLDER_PATH = "/Users/tanish-tc/Documents/dl-midterm/submissions"  # Folder with your 3-4 CSVs
 OUTPUT_HTML = "interactive_gallery.html"
-TEST_CSV = "./dataset/test.csv" # To pull the prompts
+TEST_CSV = "/Users/tanish-tc/Documents/dl-midterm/dataset/test.csv" # To pull the prompts
 
 # The file that gets selected by default
-PRIORITY_FILE = "visualize-svgs/submission-best.csv" 
+PRIORITY_FILE = "/Users/tanish-tc/Documents/dl-midterm/submission-iterations/submission-best.csv" 
 
 # THE FIX: Strip the path so we only compare the actual filename
 PRIORITY_FILENAME = os.path.basename(PRIORITY_FILE)

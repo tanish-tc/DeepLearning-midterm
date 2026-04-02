@@ -1,9 +1,3 @@
-models/Qwen2.5-1.5B-4bit-merged.zip
-models/Qwen2.5-1.5B-merged.zip
-models/Qwen2.5-1.5B-30+trains.zip
-models/gemma3-weights.zip
-models/Qwen3.5-3B-weights.zip
-models/Qwen2.5-3B_4bit-weights.zip
-models/Qwen2.5-3B-weights.zip
+models/
 dataset/
 __pycache__/
