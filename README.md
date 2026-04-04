@@ -2,6 +2,7 @@
 
 **Final Kaggle Score:** `16.05142` (and climbing)  
 **Core Stack:** PyTorch, Hugging Face `transformers`, `vLLM`, `mlx-lm`, `xml.etree.ElementTree`
+**Model Weights:** https://drive.google.com/drive/folders/1X74Wh7zczpysdyJYc2cUjitYQm8ZQN5o?usp=sharing
 
 ## 📖 The Prologue: Deceptively Simple
 The objective of this competition sounded easy enough: fine-tune a Large Language Model to act as a vector graphics engine. Feed it a text prompt, and get perfectly structured, mathematically sound SVG code in return.
